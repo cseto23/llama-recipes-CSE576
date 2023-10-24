@@ -54,6 +54,7 @@ DATASET_PREPROC = {
     "grammar_dataset": get_grammar_dataset,
     "samsum_dataset": get_samsum_dataset,
     "custom_dataset": get_custom_dataset,
+    "diverse_dataset": get_custom_dataset,
 }
 
 

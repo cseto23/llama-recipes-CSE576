@@ -34,3 +34,10 @@ class custom_dataset:
     file: str = "examples/custom_dataset.py"
     train_split: str = "train"
     test_split: str = "validation"
+
+@dataclass
+class diverse_dataset:
+    dataset: str = "diverse_dataset"
+    file: str = "examples/diverse_dataset.py"
+    train_split: str = "train"
+    test_split: str = "val"
