@@ -40,3 +40,4 @@ class diverse_dataset:
     dataset: str = "diverse_dataset"
     file: str = "/home/cseto/llama-recipes-CSE576/examples/diverse_dataset.py"
     train_split: str = "train"
+    test_split: str = "train"
