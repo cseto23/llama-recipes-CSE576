@@ -2,7 +2,7 @@ import json
 from datasets import load_dataset
 
 def get_custom_dataset(dataset_config, tokenizer, split: str):
-    fp = open('diverse_examples.json','r')
+    fp = open('/home/cseto/llama-recipes-CSE576/examples/diverse_examples.json','r')
     div_ex = json.load(fp)
     fp.close()
 
