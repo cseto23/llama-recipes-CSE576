@@ -41,10 +41,10 @@ class DiverseDataset(Dataset):
         div_ex = json.load(fp)
         fp.close()
         div_ex = div_ex['examples']
-        alpaca_ds = load_dataset('tatsu-lab/alpaca', split="train")
+        alpaca_ds = load_dataset('tatsu-lab/alpaca', split='train')
 
         self.ann = []
-        for i in div_ex[:800] if split == "val" else div_ex[200:]:
+        for i in div_ex[:800] if split == 'train' else div_ex[200:]:
             self.ann.append(alpaca_ds[i])
         
         self.max_words = max_words
