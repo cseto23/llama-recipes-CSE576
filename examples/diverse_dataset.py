@@ -8,6 +8,14 @@ from datasets import load_dataset
 
 import copy
 import json
+import os
+
+currDir = os.getcwd()
+currDirList = currDir.split('/')
+
+if currDirList[len(currDirList)-1] == 'src':
+    currDirList.pop()
+    currDir = '/'.join(currDirList)
 
 import torch
 from torch.utils.data import Dataset
@@ -29,14 +37,16 @@ PROMPT_DICT = {
 
 class DiverseDataset(Dataset):
     def __init__(self, dataset_config, tokenizer, split, max_words):
-        fp = open('/home/mrlunt/llama-recipes-CSE576/examples/diverse_examples.json', 'r')
+        fp = open(currDir+'/examples/diverse_examples.json', 'r')
         div_ex = json.load(fp)
         fp.close()
         div_ex = div_ex['examples']
         alpaca_ds = load_dataset('tatsu-lab/alpaca', split="train")
+
         self.ann = []
-        for i in div_ex[:200] if split == "val" else div_ex[200:]:
+        for i in div_ex[:800] if split == "val" else div_ex[200:]:
             self.ann.append(alpaca_ds[i])
+        
         self.max_words = max_words
         self.tokenizer = tokenizer
 
