@@ -44,7 +44,7 @@ class DiverseDataset(Dataset):
         alpaca_ds = load_dataset('tatsu-lab/alpaca', split='train')
 
         self.ann = []
-        for i in div_ex[:800] if split == 'train' else div_ex[200:]:
+        for i in div_ex[:800] if split == 'train' else div_ex[-200:]:
             self.ann.append(alpaca_ds[i])
         
         self.max_words = max_words
