@@ -48,4 +48,4 @@ class diverse_dataset:
     dataset: str = "diverse_dataset"
     file: str = currDir+"/examples/diverse_dataset.py"
     train_split: str = "train"
-    test_split: str = "train"
+    test_split: str = "val"
