@@ -90,5 +90,5 @@ class DiverseDataset(Dataset):
         }
 
 
-def get_custom_dataset(dataset_config, tokenizer, split: str, max_words=250):
+def get_custom_dataset(dataset_config, tokenizer, split: str, max_words=224):
     return DiverseDataset(dataset_config, tokenizer, split, max_words)
