@@ -28,7 +28,7 @@ PROMPT_DICT = {
 
 
 class DiverseDataset(Dataset):
-    def __init__(self, dataset_config, tokenizer, split, max_words=30):
+    def __init__(self, dataset_config, tokenizer, split, max_words):
         fp = open('/home/mrlunt/llama-recipes-CSE576/examples/diverse_examples.json', 'r')
         div_ex = json.load(fp)
         fp.close()
@@ -80,5 +80,5 @@ class DiverseDataset(Dataset):
         }
 
 
-def get_custom_dataset(dataset_config, tokenizer, split: str):
-    return DiverseDataset(dataset_config, tokenizer, split)
+def get_custom_dataset(dataset_config, tokenizer, split: str, max_words=250):
+    return DiverseDataset(dataset_config, tokenizer, split, max_words)
