@@ -74,16 +74,16 @@ def main(
         fp = open("/home/dfulop/CSE_576_2023F_project_1/diverse_examples.json", "r")
         examples = json.load(fp)
         fp.close()
-        examples['examples']
+        examples = examples['examples']
         alpaca_ds = list(load_dataset("tatsu-lab/alpaca")['train'])[train_idx_start:train_idx_end]
         all_lines = []
         for idx,d in enumerate(alpaca_ds):
-            if idx not in examples:
+            if idx+train_idx_start not in examples:
                 if d.get("input", "") == "":
                     prompt = PROMPT_DICT["prompt_no_input"].format_map(d)
                 else:
                     prompt = PROMPT_DICT["prompt_input"].format_map(d)
-                all_lines.append({"prompt":prompt, "ground_truth":d.get("output","")})
+                all_lines.append({"prompt":prompt, "ground_truth":d.get("output",""), "alpaca_idx":(idx+train_idx_start)})
 
     # Set the seeds for reproducibility
     torch.cuda.manual_seed(seed)
