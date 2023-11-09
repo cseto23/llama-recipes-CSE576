@@ -60,6 +60,8 @@ def main(
     max_padding_length: int=None, # the max padding length to be used with tokenizer padding the prompts.
     use_fast_kernels: bool = False, # Enable using SDPA from PyTroch Accelerated Transformers, make use Flash Attention and Xformer memory-efficient kernels
     split:str = "test", #train or test
+    train_idx_start:int = 0, #train index start
+    train_idx_end:int = 52002, #train index end
     **kwargs
 ):
     
@@ -73,7 +75,7 @@ def main(
         examples = json.load(fp)
         fp.close()
         examples['examples']
-        alpaca_ds = load_dataset("tatsu-lab/alpaca")['train']
+        alpaca_ds = load_dataset("tatsu-lab/alpaca")['train'][train_idx_start:train_idx_end]
         all_lines = []
         for idx,d in enumerate(alpaca_ds):
             if idx not in examples:
@@ -81,7 +83,7 @@ def main(
                     prompt = PROMPT_DICT["prompt_no_input"].format_map(d)
                 else:
                     prompt = PROMPT_DICT["prompt_input"].format_map(d)
-                all_lines.append({"prompt":prompt})
+                all_lines.append({"prompt":prompt, "ground_truth":d.get("output","")})
 
     # Set the seeds for reproducibility
     torch.cuda.manual_seed(seed)
