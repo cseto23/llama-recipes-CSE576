@@ -69,13 +69,13 @@ def main(
     tokenizer.pad_token = tokenizer.eos_token
     
     if split=="test":
-        all_lines = open("~/CSE_576_2023F_project_1/combined_test_set.jsonl").readlines()
+        all_lines = open("/home/dfulop/CSE_576_2023F_project_1/combined_test_set.jsonl").readlines()
     elif split=="train":
-        fp = open("~/CSE_576_2023F_project_1/diverse_examples.json", "r")
+        fp = open("/home/dfulop/CSE_576_2023F_project_1/diverse_examples.json", "r")
         examples = json.load(fp)
         fp.close()
         examples['examples']
-        alpaca_ds = load_dataset("tatsu-lab/alpaca")['train'][train_idx_start:train_idx_end]
+        alpaca_ds = list(load_dataset("tatsu-lab/alpaca")['train'])[train_idx_start:train_idx_end]
         all_lines = []
         for idx,d in enumerate(alpaca_ds):
             if idx not in examples:
