@@ -11,8 +11,7 @@ def load_model(model_name, quantization):
         return_dict=True,
         load_in_8bit=quantization,
         device_map="auto",
-        low_cpu_mem_usage=True,
-        device='cuda'
+        low_cpu_mem_usage=True
     )
     return model
 
