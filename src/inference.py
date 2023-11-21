@@ -93,6 +93,7 @@ def main(
     if peft_model:
         model = load_peft_model(model, peft_model)
 
+    model.to('cuda')
     model.eval()
     
     if use_fast_kernels:
