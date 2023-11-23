@@ -76,6 +76,7 @@ def compare_outputs(model, tokenizer, question: str, model_1_output: str, model_
     logprobs = None
     echo = True
     stop_str = None
+    device = "cuda"
     context_len = 2048
     stop_token_ids = []
     if tokenizer.eos_token_id not in stop_token_ids:
@@ -97,7 +98,7 @@ def compare_outputs(model, tokenizer, question: str, model_1_output: str, model_
     input_ids = input_ids[-max_src_len:]
     output_ids = list(input_ids)
     input_echo_len = len(input_ids)
-    start_ids = torch.as_tensor([input_ids], device='cuda')
+    start_ids = torch.as_tensor([input_ids], device=device)
     out = model(input_ids=start_ids, use_cache=True)
     logits = out.logits
     past_key_values = out.past_key_values
@@ -155,4 +156,5 @@ if __name__ == "__main__":
         model_1_output="Johnny's favorite color is red.",
         model_2_output="Johnny's favorite color is blue.",
     )
+    print(result)
 
