@@ -99,6 +99,7 @@ def compare_outputs(model, tokenizer, question: str, model_1_output: str, model_
     output_ids = list(input_ids)
     input_echo_len = len(input_ids)
     start_ids = torch.as_tensor([input_ids], device=device)
+    model.to(device)
     out = model(input_ids=start_ids, use_cache=True)
     logits = out.logits
     past_key_values = out.past_key_values
