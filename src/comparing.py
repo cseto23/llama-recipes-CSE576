@@ -30,10 +30,10 @@ def prepare_logits_processor(
     return processor_list
 
 
-def compare_outputs(model, tokenizer, device: str, question: str, model_1_output: str, model_2_output: str) -> str:
+def compare_outputs(model, tokenizer, device: str, question: str, model_1_output: str, model_2_output: str) -> list:
     prompt = (
-        f"Please rate two responses to a question on a scale from 1 to 10 with 1 being a poor response and 10 being "
-        f"a good response using a pipe '|' symbol to separate the scores i.e. '4|7' or '9|1'\n"
+        f"I will give you a question and two responses. Rate the two responses on a scale of 1 to 10 for RESPONSE 1 "
+        f"and RESPONSE 2 separated by a '|' respectively (i.e. 4|9)\n"
         f"QUESTION: '{question}'\n"
         f"RESPONSE 1: '{model_1_output}'\n"
         f"RESPONSE 2: '{model_2_output}'"
@@ -43,7 +43,7 @@ def compare_outputs(model, tokenizer, device: str, question: str, model_1_output
     gen_params = {
         "model": model_path,
         "prompt": prompt,
-        "temperature": 0.9,
+        "temperature": 0.7,
         "repetition_penalty": 1.0,
         "max_new_tokens": 512,
         "stop": conv.stop_str,
@@ -52,7 +52,7 @@ def compare_outputs(model, tokenizer, device: str, question: str, model_1_output
     }
     conv.append_message(conv.roles[0], prompt)
     conv.append_message(conv.roles[1], None)
-    output = list(generate_stream(
+    return list(generate_stream(
         model,
         tokenizer,
         gen_params,
@@ -60,10 +60,6 @@ def compare_outputs(model, tokenizer, device: str, question: str, model_1_output
         context_len=get_context_length(model.config),
         judge_sent_end=True,
     ))
-    print(output)
-    print()
-    print()
-    return output[-1]["text"]
 
 
 if __name__ == "__main__":
