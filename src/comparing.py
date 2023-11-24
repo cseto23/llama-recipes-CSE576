@@ -38,8 +38,6 @@ def compare_outputs(model, tokenizer, device: str, question: str, model_1_output
         f"Model 1 response: '{model_1_output}'. "
         f"Model 2 response: '{model_2_output}'."
     )
-    model.to(device)
-
     model_path = model.config["_name_or_path"]
     conv = get_conversation_template(model_path)
     gen_params = {
