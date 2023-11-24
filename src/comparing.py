@@ -38,7 +38,6 @@ def compare_outputs(model, tokenizer, device: str, question: str, model_1_output
         f"RESPONSE 1: '{model_1_output}'\n"
         f"RESPONSE 2: '{model_2_output}'"
     )
-    prompt = "hello, how are you?"
     model_path = model.config._name_or_path
     conv = get_conversation_template(model_path)
     gen_params = {
@@ -77,5 +76,5 @@ if __name__ == "__main__":
         model_1_output="Johnny's favorite color is red.",
         model_2_output="Johnny's favorite color is blue.",
     )
-    print(result)
+    print(result[-1])
 
