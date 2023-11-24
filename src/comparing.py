@@ -32,11 +32,11 @@ def prepare_logits_processor(
 
 def compare_outputs(model, tokenizer, device: str, question: str, model_1_output: str, model_2_output: str) -> str:
     prompt = (
-        f"Please rate two responses on a scale from 1 to 10 with 1 being a poor response and 10 being "
-        f"a good response using a pipe '|' symbol to separate the scores i.e. '4,7' or '9,1'. "
-        f"The context to the question is: '{question}'. "
-        f"Model 1 response: '{model_1_output}'. "
-        f"Model 2 response: '{model_2_output}'."
+        f"Please rate two responses to a question on a scale from 1 to 10 with 1 being a poor response and 10 being "
+        f"a good response using a pipe '|' symbol to separate the scores i.e. '4|7' or '9|1'\n"
+        f"QUESTION: '{question}'\n"
+        f"RESPONSE 1: '{model_1_output}'\n"
+        f"RESPONSE 2: '{model_2_output}'"
     )
     model_path = model.config._name_or_path
     conv = get_conversation_template(model_path)
@@ -60,6 +60,9 @@ def compare_outputs(model, tokenizer, device: str, question: str, model_1_output
         context_len=get_context_length(model.config),
         judge_sent_end=True,
     ))
+    print(output)
+    print()
+    print()
     return output[-1]["text"]
 
 
