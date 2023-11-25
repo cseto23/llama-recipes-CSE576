@@ -64,25 +64,48 @@ def compare_outputs(model, tokenizer, device: str, question: str, model_1_output
 
 
 if __name__ == "__main__":
+    # handle args
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_path", type=str, default=None)
+    parser.add_argument("--num_worse", type=int, default=None)
+    parser.add_argument("--combined_outputs_filepath", type=str, default=None)
+    parser.add_argument("--save_filepath", type=str, default=None)
     args = parser.parse_args()
+    stop_number = args.num_worse
+    save_filepath = args.save_filepath
+    worse_indexes = []
 
+    # load model
     vicuna_model, vicuna_tokenizer = load_model(args.model_path)
-    for i in range(10):
+
+    # read in comparison file
+    with open(args.combined_outputs_file) as file:
+        model_responses = json.loads(file.read())["predictions"]
+
+    # create save file
+    with open(save_filepath, "w") as file:
+        file.write("Index,Model1Score,Model2Score")
+
+    # compare examples from file
+    for response in model_responses:
         result = compare_outputs(
             model=vicuna_model,
             tokenizer=vicuna_tokenizer,
             device="cuda",
-            question="Johnny only wears shirts of his favorite color and his shirt is blue. What is his favorite color?",
-            model_1_output="Johnny's favorite color is red.",
-            model_2_output="Johnny's favorite color is blue.",
+            question=response["prompt"],
+            model_1_output=response["response"],
+            model_2_output=response["ground_truth"],
         )
-        with open("results.json", "w") as file:
-            file.write(json.dumps(result))
-        print(re.findall("\\d+\\|\\d+", result[-1]["text"]))
+        scores = re.findall("\\d+\\|\\d+", result[-1]["text"])
+        if scores:
+            model_1_score, model_2_score = scores[0].split("|")
+            if int(model_1_score) < int(model_2_score):
+                worse_indexes.append(response["alpaca_idx"])
+                with open(save_filepath, "a") as file:
+                    file.write(f"\n{response['alpaca_idx']},{model_1_score},{model_2_score}")
 
-    # TODO: load next 1000 "diverse" samples, along with ground truths,
-    #  and save comparisons.
+        # stop once number of worse examples were found
+        if 0 < stop_number == len(worse_indexes):
+            break
 
 
