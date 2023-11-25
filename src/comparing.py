@@ -1,4 +1,5 @@
 import argparse
+import re
 
 from transformers import (
     LogitsProcessorList,
@@ -33,7 +34,7 @@ def prepare_logits_processor(
 def compare_outputs(model, tokenizer, device: str, question: str, model_1_output: str, model_2_output: str) -> list:
     prompt = (
         f"I will give you a question and two responses. Rate the two responses on a scale of 1 to 10 for RESPONSE 1 "
-        f"and RESPONSE 2 separated by a '|' respectively. For example 'SCORE1|SCORE2'\n"
+        f"and RESPONSE 2 separated by a '|' respectively. For example 'SCORE1|SCORE2'.\n"
         f"QUESTION: '{question}'\n"
         f"RESPONSE 1: '{model_1_output}'\n"
         f"RESPONSE 2: '{model_2_output}'"
@@ -68,17 +69,18 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     vicuna_model, vicuna_tokenizer = load_model(args.model_path)
-    result = compare_outputs(
-        model=vicuna_model,
-        tokenizer=vicuna_tokenizer,
-        device="cuda",
-        question="Johnny only wears shirts of his favorite color and his shirt is blue. What is his favorite color?",
-        model_1_output="Johnny's favorite color is red.",
-        model_2_output="Johnny's favorite color is blue.",
-    )
-    with open("results.json", "w") as file:
-        file.write(json.dumps(result))
-    print(result[-1])
+    for i in range(10):
+        result = compare_outputs(
+            model=vicuna_model,
+            tokenizer=vicuna_tokenizer,
+            device="cuda",
+            question="Johnny only wears shirts of his favorite color and his shirt is blue. What is his favorite color?",
+            model_1_output="Johnny's favorite color is red.",
+            model_2_output="Johnny's favorite color is blue.",
+        )
+        with open("results.json", "w") as file:
+            file.write(json.dumps(result))
+        print(re.findall("\\d+\\|\\d+", result[-1]))
 
     # TODO: load next 1000 "diverse" samples, along with ground truths,
     #  and save comparisons.
