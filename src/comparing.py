@@ -80,7 +80,7 @@ if __name__ == "__main__":
         )
         with open("results.json", "w") as file:
             file.write(json.dumps(result))
-        print(re.findall("\\d+\\|\\d+", result[-1]))
+        print(re.findall("\\d+\\|\\d+", result[-1]["text"]))
 
     # TODO: load next 1000 "diverse" samples, along with ground truths,
     #  and save comparisons.
