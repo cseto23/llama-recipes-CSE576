@@ -76,17 +76,7 @@ if __name__ == "__main__":
         model_1_output="Johnny's favorite color is red.",
         model_2_output="Johnny's favorite color is blue.",
     )
-    pre = 0
-    output_text = ""
-    for outputs in result:
-        output_text = outputs["text"]
-        output_text = output_text.strip().split(" ")
-        now = len(output_text) - 1
-        if now > pre:
-            print(" ".join(output_text[pre:now]), end=" ", flush=True)
-            pre = now
-    print(" ".join(output_text[pre:]), flush=True)
-    # print(result[-1])
+    print(result[-1])
 
     # TODO: load next 1000 "diverse" samples, along with ground truths,
     #  and save comparisons.
