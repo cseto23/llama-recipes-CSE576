@@ -76,6 +76,8 @@ if __name__ == "__main__":
         model_1_output="Johnny's favorite color is red.",
         model_2_output="Johnny's favorite color is blue.",
     )
+    with open("results.json", "w") as file:
+        file.write(json.dumps(result))
     print(result[-1])
 
     # TODO: load next 1000 "diverse" samples, along with ground truths,
