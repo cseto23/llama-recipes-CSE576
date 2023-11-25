@@ -79,7 +79,7 @@ if __name__ == "__main__":
     vicuna_model, vicuna_tokenizer = load_model(args.model_path)
 
     # read in comparison file
-    with open(args.combined_outputs_file) as file:
+    with open(args.combined_outputs_filepath) as file:
         model_responses = json.loads(file.read())["predictions"]
 
     # create save file
