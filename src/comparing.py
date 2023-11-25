@@ -44,7 +44,7 @@ def compare_outputs(model, tokenizer, device: str, question: str, model_1_output
     gen_params = {
         "model": model_path,
         "prompt": prompt,
-        "temperature": 0.7,
+        "temperature": 0.4,
         "repetition_penalty": 1.0,
         "max_new_tokens": 512,
         "stop": conv.stop_str,
