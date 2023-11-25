@@ -33,7 +33,7 @@ def prepare_logits_processor(
 def compare_outputs(model, tokenizer, device: str, question: str, model_1_output: str, model_2_output: str) -> list:
     prompt = (
         f"I will give you a question and two responses. Rate the two responses on a scale of 1 to 10 for RESPONSE 1 "
-        f"and RESPONSE 2 separated by a '|' respectively (i.e. 4|9)\n"
+        f"and RESPONSE 2 separated by a '|' respectively. For example 'SCORE1|SCORE2'\n"
         f"QUESTION: '{question}'\n"
         f"RESPONSE 1: '{model_1_output}'\n"
         f"RESPONSE 2: '{model_2_output}'"
