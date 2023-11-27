@@ -69,9 +69,9 @@ def main(
     tokenizer.pad_token = tokenizer.eos_token
     
     if split=="test":
-        all_lines = open("/home/dfulop/CSE_576_2023F_project_1/combined_test_set.jsonl").readlines()
+        all_lines = open("/home/cseto/CSE_576_2023F_project_1/combined_test_set.jsonl").readlines()
     elif split=="train":
-        fp = open("/home/dfulop/CSE_576_2023F_project_1/diverse_examples.json", "r")
+        fp = open("/home/cseto/CSE_576_2023F_project_1/diverse_examples.json", "r")
         examples = json.load(fp)
         fp.close()
         examples = examples['examples']
