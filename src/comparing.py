@@ -85,7 +85,6 @@ if __name__ == "__main__":
     # create save file
     with open(save_filepath, "w") as file:
         file.write("Index,Model1Score,Model2Score")
-        pass
 
     # compare examples from file
     for response in model_responses:
