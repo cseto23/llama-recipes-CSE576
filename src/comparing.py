@@ -83,12 +83,12 @@ if __name__ == "__main__":
         model_responses = json.loads(file.read())["predictions"]
 
     # create save file
-    # with open(save_filepath, "w") as file:
-    #    file.write("Index,Model1Score,Model2Score")
-    #    pass
+    with open(save_filepath, "w") as file:
+        file.write("Index,Model1Score,Model2Score")
+        pass
 
     # compare examples from file
-    for response in model_responses[7795:]:
+    for response in model_responses:
         result = compare_outputs(
             model=vicuna_model,
             tokenizer=vicuna_tokenizer,
