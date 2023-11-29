@@ -11,5 +11,3 @@ source activate NLP_ENV
 
 python3 inference.py --model_name $1 --peft_model $2 --split "train" --train_idx_start $3 \
 --train_idx_end $4 --output_file $5
-
-
