@@ -2,7 +2,7 @@
 
 #SBATCH -N 1 # number of nodes
 #SBATCH -c 1 # number of cores
-#SBATCH -t 0-2:00:00 # time in d-hh:mm:ss
+#SBATCH -t 0-3:00:00 # time in d-hh:mm:ss
 #SBATCH --gres gpu:a100:1
 
 module load mamba
