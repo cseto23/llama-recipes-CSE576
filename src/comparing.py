@@ -1,5 +1,6 @@
 import argparse
 import re
+import os
 
 from transformers import (
     LogitsProcessorList,
@@ -69,10 +70,15 @@ if __name__ == "__main__":
     parser.add_argument("--model_path", type=str, default=None)
     parser.add_argument("--num_worse", type=int, default=None)
     parser.add_argument("--combined_outputs_filepath", type=str, default=None)
+    parser.add_argument("--start_index", type=int, default=-1)
+    parser.add_argument("--end_index", type=int, default=-1)
     parser.add_argument("--save_filepath", type=str, default=None)
+
     args = parser.parse_args()
     stop_number = args.num_worse
     save_filepath = args.save_filepath
+    start_index = args.start_index
+    end_index = args.end_index
     worse_indexes = []
 
     # load model
@@ -82,9 +88,22 @@ if __name__ == "__main__":
     with open(args.combined_outputs_filepath) as file:
         model_responses = json.loads(file.read())["predictions"]
 
+    # filter based on indices    
+    if (start_index >= 0)&(end_index > 0):
+        model_responses = model_responses[start_index:end_index]
+    elif (start_index == -1)|(end_index == -1):
+        if start_index == -1:
+            start_index = 0
+        
+        if end_index == -1:
+            end_index = len(model_responses)+1
+        
+        model_responses = model_responses[start_index:end_index]
+
     # create save file
-    with open(save_filepath, "w") as file:
-        file.write("Index,Model1Score,Model2Score")
+    if not os.path.isfile(save_filepath):
+        with open(save_filepath, "w") as file:
+            file.write("Index,Model1Score,Model2Score")
 
     # compare examples from file
     for response in model_responses:

@@ -1,0 +1,23 @@
+
+=====================================================================
+This module is intended solely for building or source activating user
+python environments, i.e.,
+
+    mamba create -n myenv -c conda-forge
+
+or
+
+    source activate myenv
+
+To list available environments, run:
+
+    mamba info --envs
+
+See our docs: https://links.asu.edu/solpy
+
+Any other use is NOT TESTED.
+=====================================================================
+
+  
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama.LlamaTokenizer'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thouroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+Loading checkpoint shards:   0%|          | 0/7 [00:00<?, ?it/s]Loading checkpoint shards:  14%|█▍        | 1/7 [00:16<01:40, 16.82s/it]Loading checkpoint shards:  29%|██▊       | 2/7 [00:33<01:24, 16.94s/it]Loading checkpoint shards:  43%|████▎     | 3/7 [00:50<01:08, 17.00s/it]Loading checkpoint shards:  57%|█████▋    | 4/7 [01:09<00:53, 17.72s/it]Loading checkpoint shards:  71%|███████▏  | 5/7 [01:26<00:34, 17.41s/it]Loading checkpoint shards:  86%|████████▌ | 6/7 [01:47<00:18, 18.62s/it]Loading checkpoint shards: 100%|██████████| 7/7 [01:55<00:00, 15.24s/it]Loading checkpoint shards: 100%|██████████| 7/7 [01:55<00:00, 16.55s/it]
